@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CommunRawChipWidget extends StatelessWidget {
   CommunRawChipWidget({
-    Key key,
-    @required this.backgroundColor,
-    @required this.selectedColor,
-    @required this.onSelected,
-    @required this.selected,
-    @required this.avatar,
-    @required this.label,
+    Key? key,
+    required this.backgroundColor,
+    required this.selectedColor,
+    required this.onSelected,
+    required this.selected,
+    required this.avatar,
+    required this.label,
   }) : super(key: key);
   Color backgroundColor;
-  OutlinedBorder shape;
-  Color checkmarkColor;
-  TextStyle labelStyle;
+  OutlinedBorder? shape;
+  Color? checkmarkColor;
+  TextStyle? labelStyle;
   Color selectedColor;
-  bool showCheckmark;
+  bool? showCheckmark;
   bool selected;
   Widget avatar;
   String label;

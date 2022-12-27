@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CommunFilterChipWidget extends StatelessWidget {
   CommunFilterChipWidget({
-    Key key,
-    @required this.backgroundColor,
-    @required this.checkmarkColor,
-    @required this.selectedColor,
-    @required this.onSelected,
-    @required this.selected,
-    @required this.shape,
+    Key? key,
+    required this.backgroundColor,
+    required this.checkmarkColor,
+    required this.selectedColor,
+    required this.onSelected,
+    required this.selected,
+    required this.shape,
   }) : super(key: key);
   void Function(bool) onSelected;
   Color backgroundColor;

@@ -4,7 +4,7 @@ import 'dart:ui';
 
 class DottedBorder extends Decoration {
   final LinePosition linePosition;
-  final BorderRadius borderRadius;
+  final BorderRadius? borderRadius;
   final double strokeWidth;
   final List<int> dash;
   final Shape shape;
@@ -19,23 +19,23 @@ class DottedBorder extends Decoration {
   });
 
   @override
-  BoxPainter createBoxPainter([onChanged]) => _DottedBorder(shape, linePosition, color, borderRadius, dash, strokeWidth);
+  BoxPainter createBoxPainter([void Function()? onChanged]) => _DottedBorder(shape, linePosition, color, borderRadius, dash, strokeWidth);
 }
 
 class _DottedBorder extends BoxPainter {
   LinePosition linePosition;
   Shape shape;
   Color color;
-  BorderRadius borderRadius;
+  BorderRadius? borderRadius;
   List<int> dash;
   double strokeWidth;
   _DottedBorder(this.shape, this.linePosition, this.color, this.borderRadius, this.dash, this.strokeWidth) {
-    shape = shape ?? Shape.line;
-    linePosition = linePosition ?? LinePosition.bottom;
-    color = color ?? const Color(0xFF9E9E9E);
-    dash = dash ?? const <int>[5, 5];
-    borderRadius = borderRadius ?? BorderRadius.circular(0);
-    strokeWidth = strokeWidth ?? 1;
+    shape = shape;
+    linePosition = linePosition;
+    color = color;
+    dash = dash;
+    borderRadius = borderRadius;
+    strokeWidth = strokeWidth;
   }
 
   @override
@@ -44,22 +44,31 @@ class _DottedBorder extends BoxPainter {
     if (shape == Shape.line) {
       if (linePosition == LinePosition.left) {
         path.moveTo(offset.dx, offset.dy);
-        path.lineTo(offset.dx, offset.dy + configuration.size.height);
+        path.lineTo(offset.dx, offset.dy + configuration.size!.height);
       } else if (linePosition == LinePosition.top) {
         path.moveTo(offset.dx, offset.dy);
-        path.lineTo(offset.dx + configuration.size.width, offset.dy);
+        path.lineTo(offset.dx + configuration.size!.width, offset.dy);
       } else if (linePosition == LinePosition.right) {
-        path.moveTo(offset.dx + configuration.size.width, offset.dy);
-        path.lineTo(offset.dx + configuration.size.width, offset.dy + configuration.size.height);
+        path.moveTo(offset.dx + configuration.size!.width, offset.dy);
+        path.lineTo(offset.dx + configuration.size!.width, offset.dy + configuration.size!.height);
       } else {
-        path.moveTo(offset.dx, offset.dy + configuration.size.height);
-        path.lineTo(offset.dx + configuration.size.width, offset.dy + configuration.size.height);
+        path.moveTo(offset.dx, offset.dy + configuration.size!.height);
+        path.lineTo(offset.dx + configuration.size!.width, offset.dy + configuration.size!.height);
       }
     } else if (shape == Shape.box) {
-      RRect rect = RRect.fromLTRBAndCorners(offset.dx, offset.dy, offset.dx + configuration.size.width, offset.dy + configuration.size.height, bottomLeft: (borderRadius?.bottomLeft), bottomRight: (borderRadius?.bottomRight), topLeft: (borderRadius?.topLeft), topRight: (borderRadius?.topRight));
+      RRect rect = RRect.fromLTRBAndCorners(
+        offset.dx,
+        offset.dy,
+        offset.dx + configuration.size!.width,
+        offset.dy + configuration.size!.height,
+        bottomLeft: borderRadius?.bottomLeft as Radius,
+        bottomRight: borderRadius?.bottomRight as Radius,
+        topLeft: borderRadius?.topLeft as Radius,
+        topRight: borderRadius?.topRight as Radius,
+      );
       path.addRRect(rect);
     } else if (shape == Shape.circle) {
-      path.addOval(Rect.fromLTWH(offset.dx, offset.dy, configuration.size.width, configuration.size.height));
+      path.addOval(Rect.fromLTWH(offset.dx, offset.dy, configuration.size!.width, configuration.size!.height));
     }
 
     PathMetrics metrics = path.computeMetrics(forceClosed: false);

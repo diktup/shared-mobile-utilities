@@ -6,17 +6,17 @@ import 'dart:convert';
 import 'BaseApi.dart';
 
 class ImageClient extends BaseApi {
-  String _cloudName;
-  String _apiKey;
-  String _apiSecret;
+  String? _cloudName;
+  String? _apiKey;
+  String? _apiSecret;
 
-  ImageClient(String apiKey, String apiSecret, String cloudName) {
+  ImageClient(String? apiKey, String? apiSecret, String? cloudName) {
     _apiKey = apiKey;
     _apiSecret = apiSecret;
     _cloudName = cloudName;
   }
 
-  Future<CloudinaryResponse> uploadImage(String imagePath, {String imageFilename, String folder}) async {
+  Future<CloudinaryResponse> uploadImage(String imagePath, {String? imageFilename, String? folder}) async {
     int timeStamp = DateTime.now().millisecondsSinceEpoch;
 
     Map<String, dynamic> params = {};
@@ -59,7 +59,7 @@ class ImageClient extends BaseApi {
     }
   }
 
-  Future<CloudinaryResponse> uploadVideo(String videoPath, {String videoFilename, String folder}) async {
+  Future<CloudinaryResponse> uploadVideo(String videoPath, {String? videoFilename, String? folder}) async {
     int timeStamp = DateTime.now().millisecondsSinceEpoch;
 
     Map<String, dynamic> params = {};
@@ -101,7 +101,7 @@ class ImageClient extends BaseApi {
     }
   }
 
-  String getSignature(String folder, String publicId, int timeStamp) {
+  String getSignature(String? folder, String publicId, int timeStamp) {
     var buffer = StringBuffer();
     buffer.write("folder=$folder&");
     buffer.write("public_id=$publicId&");

@@ -5,10 +5,10 @@ import 'dart:io';
 // ignore: must_be_immutable
 class CustomCircularProgressIndicatorWidget extends StatelessWidget {
   CustomCircularProgressIndicatorWidget({
-    Key key,
-    @required this.edgeInsetsGeometry,
-    @required this.alignmentGeometry,
-    @required this.color,
+    Key? key,
+    required this.edgeInsetsGeometry,
+    required this.alignmentGeometry,
+    required this.color,
   }) : super(key: key);
   EdgeInsetsGeometry edgeInsetsGeometry;
   AlignmentGeometry alignmentGeometry;

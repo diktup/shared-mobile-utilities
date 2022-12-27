@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CustomInkWell extends StatelessWidget {
   CustomInkWell({
-    Key key,
-    @required this.child,
-    @required this.onTap,
+    Key? key,
+    required this.child,
+    required this.onTap,
     this.onLongPress,
   }) : super(key: key);
-  void Function() onLongPress;
-  void Function() onTap;
+  void Function()? onLongPress;
+  void Function()? onTap;
   Widget child;
   @override
   Widget build(BuildContext context) => InkWell(

@@ -17,17 +17,17 @@ class CustomCountDownWidget extends StatefulWidget {
   final bool tightLabel;
 
   const CustomCountDownWidget({
-    Key key,
-    @required @required this.duration,
-    @required this.separatorTextStyle,
-    @required this.slideDirection,
-    @required this.shouldShowDays,
-    @required this.tightLabel,
-    @required this.decoration,
-    @required this.textStyle,
-    @required this.separator,
-    @required this.padding,
-    @required this.onDone,
+    Key? key,
+    @required required this.duration,
+    required this.separatorTextStyle,
+    required this.slideDirection,
+    required this.shouldShowDays,
+    required this.tightLabel,
+    required this.decoration,
+    required this.textStyle,
+    required this.separator,
+    required this.padding,
+    required this.onDone,
   }) : super(key: key);
 
   @override
@@ -44,9 +44,9 @@ class SlideCountdownClockState extends State<CustomCountDownWidget> {
     }
   }
 
-  bool shouldShowDays;
-  Duration timeLeft;
-  Stream<DateTime> timeStream;
+  late bool shouldShowDays;
+  late Duration timeLeft;
+  Stream<DateTime>? timeStream;
 
   @override
   void initState() {
@@ -59,9 +59,7 @@ class SlideCountdownClockState extends State<CustomCountDownWidget> {
     final initStream = Stream<DateTime>.periodic(const Duration(milliseconds: 1000), (_) {
       timeLeft -= const Duration(seconds: 1);
       if (timeLeft.inSeconds == 0) {
-        Future.delayed(const Duration(milliseconds: 1000), () {
-          if (widget.onDone != null) widget.onDone();
-        });
+        Future.delayed(const Duration(milliseconds: 1000), () => widget.onDone());
       }
       return time;
     });
@@ -79,7 +77,7 @@ class SlideCountdownClockState extends State<CustomCountDownWidget> {
       dayDigits = _buildDigitForLargeNumber(timeStream, digits, DateTime.now(), 'daysHundreds');
     } else {
       dayDigits = _buildDigit(
-        timeStream,
+        timeStream!,
         (DateTime time) => (timeLeft.inDays) ~/ 10,
         (DateTime time) => (timeLeft.inDays) % 10,
         DateTime.now(),
@@ -93,7 +91,7 @@ class SlideCountdownClockState extends State<CustomCountDownWidget> {
         (shouldShowDays) ? dayDigits : const SizedBox(),
         (widget.separator.isNotEmpty && shouldShowDays) ? _buildSeparator() : const SizedBox(),
         _buildDigit(
-          timeStream,
+          timeStream!,
           (DateTime time) => (timeLeft.inHours % 24) ~/ 10,
           (DateTime time) => (timeLeft.inHours % 24) % 10,
           DateTime.now(),
@@ -101,7 +99,7 @@ class SlideCountdownClockState extends State<CustomCountDownWidget> {
         ),
         (widget.separator.isNotEmpty) ? _buildSeparator() : const SizedBox(),
         _buildDigit(
-          timeStream,
+          timeStream!,
           (DateTime time) => (timeLeft.inMinutes % 60) ~/ 10,
           (DateTime time) => (timeLeft.inMinutes % 60) % 10,
           DateTime.now(),
@@ -109,7 +107,7 @@ class SlideCountdownClockState extends State<CustomCountDownWidget> {
         ),
         (widget.separator.isNotEmpty) ? _buildSeparator() : const SizedBox(),
         _buildDigit(
-          timeStream,
+          timeStream!,
           (DateTime time) => (timeLeft.inSeconds % 60) ~/ 10,
           (DateTime time) => (timeLeft.inSeconds % 60) % 10,
           DateTime.now(),
@@ -119,16 +117,16 @@ class SlideCountdownClockState extends State<CustomCountDownWidget> {
     );
   }
 
-  Widget _buildSeparator() => Text(widget.separator, style: widget.separatorTextStyle ?? widget.textStyle);
+  Widget _buildSeparator() => Text(widget.separator, style: widget.separatorTextStyle);
 
-  Widget _buildDigitForLargeNumber(Stream<DateTime> timeStream, List<Function> digits, DateTime startTime, String id) {
+  Widget _buildDigitForLargeNumber(Stream<DateTime>? timeStream, List<Function> digits, DateTime startTime, String id) {
     String timeLeftString = timeLeft.inDays.toString();
     List<Widget> rows = [];
     for (int i = 0; i < timeLeftString.toString().length; i++) {
       rows.add(Container(
           decoration: widget.decoration,
           padding: widget.tightLabel ? const EdgeInsets.only(left: 3) : EdgeInsets.zero,
-          child: Digit<int>(padding: widget.padding, itemStream: timeStream.map<int>(digits[i]), initValue: digits[i](startTime), id: id, decoration: widget.decoration, slideDirection: widget.slideDirection, textStyle: widget.textStyle)));
+          child: Digit<int?>(padding: widget.padding, itemStream: timeStream!.map<int>(digits[i] as int Function(DateTime)), initValue: digits[i](startTime), id: id, decoration: widget.decoration, slideDirection: widget.slideDirection, textStyle: widget.textStyle)));
     }
     return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.center, children: [Row(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, children: rows)]);
   }
@@ -145,9 +143,9 @@ class SlideCountdownClockState extends State<CustomCountDownWidget> {
             Container(
               decoration: widget.decoration,
               padding: widget.tightLabel ? const EdgeInsets.only(left: 3) : EdgeInsets.zero,
-              child: Digit<int>(
+              child: Digit<int?>(
                 padding: widget.padding,
-                itemStream: timeStream.map<int>(tensDigit),
+                itemStream: timeStream.map<int>(tensDigit as int Function(DateTime)),
                 initValue: tensDigit(startTime),
                 id: id,
                 decoration: widget.decoration,
@@ -158,9 +156,9 @@ class SlideCountdownClockState extends State<CustomCountDownWidget> {
             Container(
               decoration: widget.decoration,
               padding: widget.tightLabel ? const EdgeInsets.only(right: 3) : EdgeInsets.zero,
-              child: Digit<int>(
+              child: Digit<int?>(
                 padding: widget.padding,
-                itemStream: timeStream.map<int>(onesDigit),
+                itemStream: timeStream.map<int>(onesDigit as int Function(DateTime)),
                 initValue: onesDigit(startTime),
                 decoration: widget.decoration,
                 slideDirection: widget.slideDirection,

@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'mix_utility.dart';
 
-BuildContext context = navigationService.navigatorKey.currentContext;
-NavigationService navigationService = locator<NavigationService>();
+BuildContext? context = navigationService!.navigatorKey.currentContext;
+NavigationService? navigationService = locator<NavigationService>();
 
 DateTime getLastDayOfTheWeek() => DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).add(Duration(days: DateTime.daysPerWeek - DateTime.now().weekday));
 

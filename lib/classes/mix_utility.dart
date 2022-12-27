@@ -32,7 +32,7 @@ String getStringCapitalized(String string) {
   return "${string.substring(0, 1).toUpperCase()}${string.substring(1, string.length).toLowerCase()}";
 }
 
-String getFormattedDouble(double value, {int maximumFractionDigits}) {
+String getFormattedDouble(double value, {int? maximumFractionDigits}) {
   NumberFormat numberFormat = NumberFormat();
   numberFormat.minimumFractionDigits = 0;
   numberFormat.maximumFractionDigits = maximumFractionDigits ?? 2;

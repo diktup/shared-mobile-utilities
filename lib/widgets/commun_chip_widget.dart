@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CommunChipWidget extends StatelessWidget {
   CommunChipWidget({
-    Key key,
-    @required this.borderRadiusGeometry,
-    @required this.edgeInsetsGeometry,
+    Key? key,
+    required this.borderRadiusGeometry,
+    required this.edgeInsetsGeometry,
     this.marginEdgeInsetsGeometry,
-    @required this.color,
+    required this.color,
     this.onLongPress,
     this.textStyle,
     this.boxShadow,
@@ -20,19 +20,19 @@ class CommunChipWidget extends StatelessWidget {
     this.child,
     this.width,
   }) : super(key: key);
-  EdgeInsetsGeometry marginEdgeInsetsGeometry;
+  EdgeInsetsGeometry? marginEdgeInsetsGeometry;
   BorderRadiusGeometry borderRadiusGeometry;
   EdgeInsetsGeometry edgeInsetsGeometry;
-  void Function() onLongPress;
-  List<BoxShadow> boxShadow;
-  void Function() onTap;
-  TextStyle textStyle;
-  BoxBorder boxBorder;
-  Gradient gradient;
-  double height;
-  String string;
-  Widget child;
-  double width;
+  void Function()? onLongPress;
+  List<BoxShadow>? boxShadow;
+  void Function()? onTap;
+  TextStyle? textStyle;
+  BoxBorder? boxBorder;
+  Gradient? gradient;
+  double? height;
+  String? string;
+  Widget? child;
+  double? width;
   Color color;
 
   @override
@@ -56,6 +56,6 @@ class CommunChipWidget extends StatelessWidget {
           border: boxBorder,
           color: color,
         ),
-        child: child ?? Text(string, textAlign: TextAlign.center, style: textStyle),
+        child: child ?? Text(string!, textAlign: TextAlign.center, style: textStyle),
       );
 }

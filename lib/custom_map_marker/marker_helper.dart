@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 class MarkerHelper extends StatefulWidget {
-  const MarkerHelper({Key key, @required this.markerWidgets, @required this.callback}) : super(key: key);
+  const MarkerHelper({Key? key, required this.markerWidgets, required this.callback}) : super(key: key);
   final List<Widget> markerWidgets;
   final Function(List<Uint8List>) callback;
 
@@ -42,9 +42,9 @@ class __MarkerHelper extends State<MarkerHelper> with AfterLayoutMixin {
   }
 
   Future<Uint8List> _getUint8List(GlobalKey markerKey) async {
-    RenderRepaintBoundary boundary = markerKey.currentContext.findRenderObject();
+    RenderRepaintBoundary boundary = markerKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     var image = await boundary.toImage(pixelRatio: 2.0);
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    ByteData byteData = await (image.toByteData(format: ui.ImageByteFormat.png) as Future<ByteData>);
     return byteData.buffer.asUint8List();
   }
 }

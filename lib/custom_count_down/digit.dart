@@ -13,14 +13,14 @@ class Digit<T> extends StatefulWidget {
   final EdgeInsets padding;
 
   const Digit({
-    Key key,
-    @required this.itemStream,
-    @required this.initValue,
-    @required this.id,
-    @required this.textStyle,
-    @required this.decoration,
-    @required this.slideDirection,
-    @required this.padding,
+    Key? key,
+    required this.itemStream,
+    required this.initValue,
+    required this.id,
+    required this.textStyle,
+    required this.decoration,
+    required this.slideDirection,
+    required this.padding,
   }) : super(key: key);
 
   @override
@@ -28,10 +28,10 @@ class Digit<T> extends StatefulWidget {
 }
 
 class _DigitState extends State<Digit> with SingleTickerProviderStateMixin {
-  StreamSubscription<int> _streamSubscription;
+  late StreamSubscription<int> _streamSubscription;
   int _currentValue = 0;
   int _nextValue = 0;
-  AnimationController _controller;
+  late AnimationController _controller;
 
   bool haveData = false;
 
@@ -39,13 +39,13 @@ class _DigitState extends State<Digit> with SingleTickerProviderStateMixin {
     begin: const Offset(0.0, -1.0),
     end: Offset.zero,
   );
-  Animation<Offset> _slideDownAnimation;
+  late Animation<Offset> _slideDownAnimation;
 
   final Animatable<Offset> _slideDownDetails2 = Tween<Offset>(
     begin: const Offset(0.0, 0.0),
     end: const Offset(0.0, 1.0),
   );
-  Animation<Offset> _slideDownAnimation2;
+  late Animation<Offset> _slideDownAnimation2;
 
   @override
   void initState() {
@@ -67,13 +67,11 @@ class _DigitState extends State<Digit> with SingleTickerProviderStateMixin {
     _currentValue = widget.initValue;
     _streamSubscription = widget.itemStream.distinct().listen((value) {
       haveData = true;
-      if (_currentValue == null) {
-        _currentValue = value;
-      } else if (value != _currentValue) {
+      if (value != _currentValue) {
         _nextValue = value;
         _controller.forward();
       }
-    });
+    }) as StreamSubscription<int>;
   }
 
   @override
@@ -98,7 +96,7 @@ class _DigitState extends State<Digit> with SingleTickerProviderStateMixin {
     return Container(
       padding: widget.padding,
       alignment: Alignment.center,
-      decoration: widget.decoration ?? const BoxDecoration(),
+      decoration: widget.decoration ,
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, w) {

@@ -5,10 +5,10 @@ class GestureZoomWidget extends StatefulWidget {
   final double maxScale;
   final double doubleTapScale;
   final Widget child;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Duration duration;
 
-  const GestureZoomWidget({Key key, this.maxScale = 5.0, this.doubleTapScale = 2.0, @required this.child, this.onPressed, this.duration = const Duration(milliseconds: 200)})
+  const GestureZoomWidget({Key? key, this.maxScale = 5.0, this.doubleTapScale = 2.0, required this.child, this.onPressed, this.duration = const Duration(milliseconds: 200)})
       : assert(maxScale >= 1.0),
         assert(doubleTapScale >= 1.0 && doubleTapScale <= maxScale),
         super(key: key);
@@ -18,12 +18,12 @@ class GestureZoomWidget extends StatefulWidget {
 }
 
 class _GestureZoomWidget extends State<GestureZoomWidget> with TickerProviderStateMixin {
-  AnimationController _scaleAnimController;
-  AnimationController _offsetAnimController;
-  ScaleUpdateDetails _latestScaleUpdateDetails;
+  AnimationController? _scaleAnimController;
+  AnimationController? _offsetAnimController;
+  ScaleUpdateDetails? _latestScaleUpdateDetails;
   double _scale = 1.0;
   Offset _offset = Offset.zero;
-  Offset _doubleTapPosition;
+  Offset? _doubleTapPosition;
   bool _isScaling = false;
   bool _isDragging = false;
   final double _maxDragOver = 100;
@@ -88,7 +88,7 @@ class _GestureZoomWidget extends State<GestureZoomWidget> with TickerProviderSta
       return;
     }
 
-    double scaleIncrement = details.scale - _latestScaleUpdateDetails.scale;
+    double scaleIncrement = details.scale - _latestScaleUpdateDetails!.scale;
     if (details.scale < 1.0 && _scale > 1.0) {
       scaleIncrement *= _scale;
     }
@@ -99,13 +99,13 @@ class _GestureZoomWidget extends State<GestureZoomWidget> with TickerProviderSta
     }
     _scale = max(_scale + scaleIncrement, 0.0);
 
-    double scaleOffsetX = context.size.width * (_scale - 1.0) / 2;
-    double scaleOffsetY = context.size.height * (_scale - 1.0) / 2;
+    double scaleOffsetX = context.size!.width * (_scale - 1.0) / 2;
+    double scaleOffsetY = context.size!.height * (_scale - 1.0) / 2;
     double scalePointDX = (details.localFocalPoint.dx + scaleOffsetX - _offset.dx) / _scale;
     double scalePointDY = (details.localFocalPoint.dy + scaleOffsetY - _offset.dy) / _scale;
     _offset += Offset(
-      (context.size.width / 2 - scalePointDX) * scaleIncrement,
-      (context.size.height / 2 - scalePointDY) * scaleIncrement,
+      (context.size!.width / 2 - scalePointDX) * scaleIncrement,
+      (context.size!.height / 2 - scalePointDY) * scaleIncrement,
     );
 
     _latestScaleUpdateDetails = details;
@@ -121,10 +121,10 @@ class _GestureZoomWidget extends State<GestureZoomWidget> with TickerProviderSta
       return;
     }
 
-    double offsetXIncrement = (details.localFocalPoint.dx - _latestScaleUpdateDetails.localFocalPoint.dx) * _scale;
-    double offsetYIncrement = (details.localFocalPoint.dy - _latestScaleUpdateDetails.localFocalPoint.dy) * _scale;
+    double offsetXIncrement = (details.localFocalPoint.dx - _latestScaleUpdateDetails!.localFocalPoint.dx) * _scale;
+    double offsetYIncrement = (details.localFocalPoint.dy - _latestScaleUpdateDetails!.localFocalPoint.dy) * _scale;
 
-    double scaleOffsetX = context.size.width * (_scale - 1.0) / 2;
+    double scaleOffsetX = context.size!.width * (_scale - 1.0) / 2;
     if (scaleOffsetX <= 0) {
       offsetXIncrement = 0;
     } else if (_offset.dx > scaleOffsetX) {
@@ -133,7 +133,7 @@ class _GestureZoomWidget extends State<GestureZoomWidget> with TickerProviderSta
       offsetXIncrement *= (_maxDragOver - (-scaleOffsetX - _offset.dx)) / _maxDragOver;
     }
 
-    double scaleOffsetY = (context.size.height * _scale - MediaQuery.of(context).size.height) / 2;
+    double scaleOffsetY = (context.size!.height * _scale - MediaQuery.of(context).size.height) / 2;
     if (scaleOffsetY <= 0) {
       offsetYIncrement = 0;
     } else if (_offset.dy > scaleOffsetY) {
@@ -158,7 +158,7 @@ class _GestureZoomWidget extends State<GestureZoomWidget> with TickerProviderSta
     } else if (_isDragging) {
       double realScale = _scale > widget.maxScale ? widget.maxScale : _scale;
       double targetOffsetX = _offset.dx, targetOffsetY = _offset.dy;
-      double scaleOffsetX = context.size.width * (realScale - 1.0) / 2;
+      double scaleOffsetX = context.size!.width * (realScale - 1.0) / 2;
       if (scaleOffsetX <= 0) {
         targetOffsetX = 0;
       } else if (_offset.dx > scaleOffsetX) {
@@ -166,7 +166,7 @@ class _GestureZoomWidget extends State<GestureZoomWidget> with TickerProviderSta
       } else if (_offset.dx < -scaleOffsetX) {
         targetOffsetX = -scaleOffsetX;
       }
-      double scaleOffsetY = (context.size.height * realScale - MediaQuery.of(context).size.height) / 2;
+      double scaleOffsetY = (context.size!.height * realScale - MediaQuery.of(context).size.height) / 2;
       if (scaleOffsetY < 0) {
         targetOffsetY = 0;
       } else if (_offset.dy > scaleOffsetY) {
@@ -203,21 +203,21 @@ class _GestureZoomWidget extends State<GestureZoomWidget> with TickerProviderSta
   _animationScale(double targetScale) {
     _scaleAnimController?.dispose();
     _scaleAnimController = AnimationController(vsync: this, duration: widget.duration);
-    Animation anim = Tween<double>(begin: _scale, end: targetScale).animate(_scaleAnimController);
-    anim.addListener(() => setState(() => _scaling(ScaleUpdateDetails(focalPoint: _doubleTapPosition, localFocalPoint: _doubleTapPosition, scale: anim.value, horizontalScale: anim.value, verticalScale: anim.value))));
+    Animation anim = Tween<double>(begin: _scale, end: targetScale).animate(_scaleAnimController!);
+    anim.addListener(() => setState(() => _scaling(ScaleUpdateDetails(focalPoint: _doubleTapPosition!, localFocalPoint: _doubleTapPosition, scale: anim.value, horizontalScale: anim.value, verticalScale: anim.value))));
     anim.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _onScaleEnd(ScaleEndDetails());
       }
     });
-    _scaleAnimController.forward();
+    _scaleAnimController!.forward();
   }
 
   _animationOffset(Offset targetOffset) {
     _offsetAnimController?.dispose();
     _offsetAnimController = AnimationController(vsync: this, duration: widget.duration);
-    Animation anim = _offsetAnimController.drive(Tween<Offset>(begin: _offset, end: targetOffset));
+    Animation anim = _offsetAnimController!.drive(Tween<Offset>(begin: _offset, end: targetOffset));
     anim.addListener(() => setState(() => _offset = anim.value));
-    _offsetAnimController.fling();
+    _offsetAnimController!.fling();
   }
 }

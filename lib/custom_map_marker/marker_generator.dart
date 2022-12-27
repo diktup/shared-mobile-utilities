@@ -12,8 +12,8 @@ class MarkerGenerator {
   void afterFirstLayout(BuildContext context) => addOverlay(context);
 
   void addOverlay(BuildContext context) {
-    OverlayState overlayState = Overlay.of(context);
-    OverlayEntry entry;
+    OverlayState overlayState = Overlay.of(context)!;
+    late OverlayEntry entry;
     entry = OverlayEntry(
       maintainState: true,
       builder: (context) => MarkerHelper(

@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CommunTextButtonWidget extends StatelessWidget {
   CommunTextButtonWidget({
-    Key key,
-    @required this.onPressed,
-    @required this.padding,
-    @required this.color,
-    @required this.shape,
-    @required this.child,
+    Key? key,
+    required this.onPressed,
+    required this.padding,
+    required this.color,
+    required this.shape,
+    required this.child,
     this.minWidth,
   }) : super(key: key);
   EdgeInsetsGeometry padding;
   void Function() onPressed;
   ShapeBorder shape;
-  double minWidth;
+  double? minWidth;
   Widget child;
   Color color;
   @override
@@ -24,9 +24,10 @@ class CommunTextButtonWidget extends StatelessWidget {
         child: TextButton(
           onPressed: onPressed,
           style: TextButton.styleFrom(
+            // ignore: unnecessary_null_comparison
             backgroundColor: onPressed == null ? color.withOpacity(0.4) : color,
             padding: padding,
-            shape: shape,
+            shape: shape as OutlinedBorder?,
           ),
           child: child,
         ),
