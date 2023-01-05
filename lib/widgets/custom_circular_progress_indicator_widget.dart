@@ -6,19 +6,19 @@ import 'dart:io';
 class CustomCircularProgressIndicatorWidget extends StatelessWidget {
   CustomCircularProgressIndicatorWidget({
     Key? key,
-    required this.edgeInsetsGeometry,
-    required this.alignmentGeometry,
+    required this.alignment,
+    required this.padding,
     required this.color,
   }) : super(key: key);
-  EdgeInsetsGeometry edgeInsetsGeometry;
-  AlignmentGeometry alignmentGeometry;
+  AlignmentGeometry alignment;
+  EdgeInsetsGeometry padding;
   Color color;
 
   @override
   Widget build(BuildContext context) => Align(
-        alignment: alignmentGeometry,
+        alignment: alignment,
         child: Padding(
-          padding: edgeInsetsGeometry,
+          padding: padding,
           child: SizedBox(
             width: 20.0,
             height: 20.0,
