@@ -26,6 +26,7 @@ class ImageClient extends BaseApi {
 
     params["api_key"] = _apiKey;
 
+    // ignore: unnecessary_null_comparison
     if (imagePath == null) {
       throw Exception("imagePath must not be null");
     }
@@ -69,6 +70,7 @@ class ImageClient extends BaseApi {
 
     params["api_key"] = _apiKey;
 
+    // ignore: unnecessary_null_comparison
     if (videoPath == null) {
       throw Exception("videoPath must not be null");
     }
