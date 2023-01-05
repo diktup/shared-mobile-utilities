@@ -25,9 +25,9 @@ class CommunTextButtonWidget extends StatelessWidget {
           onPressed: onPressed,
           style: TextButton.styleFrom(
             // ignore: unnecessary_null_comparison
-            backgroundColor: onPressed == null ? color.withOpacity(0.4) : color,
-            padding: padding,
+            backgroundColor: onPressed == null ? color.withOpacity(0.6) : color,
             shape: shape as OutlinedBorder?,
+            padding: padding,
           ),
           child: child,
         ),

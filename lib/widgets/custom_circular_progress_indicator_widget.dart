@@ -25,10 +25,10 @@ class CustomCircularProgressIndicatorWidget extends StatelessWidget {
             child: Platform.isIOS
                 ? const CupertinoActivityIndicator(animating: true)
                 : CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).focusColor),
+                    valueColor: AlwaysStoppedAnimation<Color>(color),
                     backgroundColor: Theme.of(context).focusColor,
-                    color: color,
                     strokeWidth: 0.6,
+                    color: color,
                   ),
           ),
         ),

@@ -28,7 +28,7 @@ class CommunRawChipWidget extends StatelessWidget {
         child: RawChip(
           selectedShadowColor: Colors.transparent,
           label: Text(label, style: labelStyle),
-          padding: const EdgeInsets.all(7.0),
+          padding: const EdgeInsets.all(8.0),
           shadowColor: Colors.transparent,
           backgroundColor: backgroundColor,
           checkmarkColor: checkmarkColor,
