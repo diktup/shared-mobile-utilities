@@ -27,7 +27,7 @@ class CustomCircularProgressIndicatorWidget extends StatelessWidget {
                 : CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(color),
                     backgroundColor: Theme.of(context).focusColor,
-                    strokeWidth: 0.6,
+                    strokeWidth: 1.0,
                     color: color,
                   ),
           ),

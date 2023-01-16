@@ -11,8 +11,8 @@ class CommunChipWidget extends StatelessWidget {
     this.onLongPress,
     this.textStyle,
     this.boxShadow,
-    this.boxBorder,
     this.gradient,
+    this.border,
     this.margin,
     this.string,
     this.height,
@@ -27,8 +27,8 @@ class CommunChipWidget extends StatelessWidget {
   List<BoxShadow>? boxShadow;
   void Function()? onTap;
   TextStyle? textStyle;
-  BoxBorder? boxBorder;
   Gradient? gradient;
+  BoxBorder? border;
   double? height;
   String? string;
   Widget? child;
@@ -45,6 +45,7 @@ class CommunChipWidget extends StatelessWidget {
               : communChipWidget();
 
   Widget communChipWidget() => Container(
+        child: child ?? Text(string!, textAlign: TextAlign.center, style: textStyle),
         margin: margin ?? EdgeInsets.zero,
         padding: padding,
         height: height,
@@ -53,9 +54,8 @@ class CommunChipWidget extends StatelessWidget {
           borderRadius: borderRadius,
           boxShadow: boxShadow ?? [],
           gradient: gradient,
-          border: boxBorder,
+          border: border,
           color: color,
         ),
-        child: child ?? Text(string!, textAlign: TextAlign.center, style: textStyle),
       );
 }
