@@ -40,6 +40,7 @@ class CommunRawChipWidget extends StatelessWidget {
           avatar: avatar,
           label: label,
           shape: shape,
+        
         ),
       );
 }
