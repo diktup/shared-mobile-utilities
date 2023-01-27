@@ -1,7 +1,7 @@
 enum DeviceTheme {
   SYSTEM,
-  DARK,
   LIGHT,
+  DARK,
 }
 
 enum SlideDirection {

@@ -6,12 +6,14 @@ import 'dart:io';
 class CustomCircularProgressIndicatorWidget extends StatelessWidget {
   CustomCircularProgressIndicatorWidget({
     Key? key,
+    required this.backgroundColor,
     required this.alignment,
     required this.padding,
     required this.color,
   }) : super(key: key);
   AlignmentGeometry alignment;
   EdgeInsetsGeometry padding;
+  Color backgroundColor;
   Color color;
 
   @override
@@ -26,7 +28,7 @@ class CustomCircularProgressIndicatorWidget extends StatelessWidget {
                 ? const CupertinoActivityIndicator(animating: true)
                 : CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(color),
-                    backgroundColor: Theme.of(context).focusColor,
+                    backgroundColor: backgroundColor,
                     strokeWidth: 1.0,
                     color: color,
                   ),
