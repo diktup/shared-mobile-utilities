@@ -11,12 +11,12 @@ class CommunTextButtonWidget extends StatelessWidget {
     required this.child,
     this.minWidth,
   }) : super(key: key);
-  EdgeInsetsGeometry padding;
-  void Function() onPressed;
-  ShapeBorder shape;
+  EdgeInsetsGeometry? padding;
+  void Function()? onPressed;
+  ShapeBorder? shape;
   double? minWidth;
-  Widget child;
-  Color color;
+  Widget? child;
+  Color? color;
   @override
   // ignore: deprecated_member_use
   Widget build(BuildContext context) => SizedBox(
@@ -25,11 +25,11 @@ class CommunTextButtonWidget extends StatelessWidget {
           onPressed: onPressed,
           style: TextButton.styleFrom(
             // ignore: unnecessary_null_comparison
-            backgroundColor: onPressed == null ? color.withOpacity(0.6) : color,
+            backgroundColor: onPressed == null ? color?.withOpacity(0.5) : color,
             shape: shape as OutlinedBorder?,
             padding: padding,
           ),
-          child: child,
+          child: child!,
         ),
       );
 }
