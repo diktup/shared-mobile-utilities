@@ -20,7 +20,7 @@ class CommunChipWidget extends StatelessWidget {
     this.child,
     this.width,
   }) : super(key: key);
-  BorderRadiusGeometry borderRadius;
+  BorderRadiusGeometry? borderRadius;
   void Function()? onLongPress;
   EdgeInsetsGeometry? margin;
   EdgeInsetsGeometry padding;
@@ -33,7 +33,7 @@ class CommunChipWidget extends StatelessWidget {
   String? string;
   Widget? child;
   double? width;
-  Color color;
+  Color? color;
 
   @override
   Widget build(BuildContext context) => onTap is void Function()
@@ -45,7 +45,6 @@ class CommunChipWidget extends StatelessWidget {
               : communChipWidget();
 
   Widget communChipWidget() => Container(
-        child: child ?? Text(string!, textAlign: TextAlign.center, style: textStyle),
         margin: margin ?? EdgeInsets.zero,
         padding: padding,
         height: height,
@@ -57,5 +56,11 @@ class CommunChipWidget extends StatelessWidget {
           border: border,
           color: color,
         ),
+        child: child ??
+            Text(
+              string!,
+              textAlign: TextAlign.center,
+              style: textStyle,
+            ),
       );
 }

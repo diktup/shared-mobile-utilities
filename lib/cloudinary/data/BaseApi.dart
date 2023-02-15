@@ -29,6 +29,5 @@ class BaseApi {
   Future<Response<T>> httpPost<T>(String url, Map<String, dynamic> params) async {
     Dio dio = await getApiClient();
     return await dio.post(url, data: params);
-   
   }
 }
